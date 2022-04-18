@@ -1,6 +1,6 @@
 # **Minecraft Rcon Manager**
 
-a little program that i wrote bcause i thought any rcon manager before didn't had enough features
+a little program that i wrote because i thought any rcon manager before didn't had enough features
 
 ## **installation**
 
