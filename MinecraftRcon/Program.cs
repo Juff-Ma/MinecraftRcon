@@ -1,8 +1,6 @@
 ﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
 using System;
-using System.Threading.Tasks;
+
 
 namespace MinecraftRcon
 {
@@ -17,10 +15,6 @@ namespace MinecraftRcon
             Console.WindowHeight = 20;
             Console.WindowWidth = 50;
             Console.Title = "Minecraft Rcon console";
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Clear();
-            Console.WriteLine("| Console for Rcon connections and logging |");
             BuildAvaloniaApp()
 .StartWithClassicDesktopLifetime(args);
         }

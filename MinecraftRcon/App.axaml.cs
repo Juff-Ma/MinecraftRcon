@@ -10,10 +10,12 @@ namespace MinecraftRcon
         public override void Initialize()
         {
             instance = this;
+            settings = new System.Xml.Serialization.XmlSerializer(typeof(Settings)).Deserialize(new System.IO.StreamReader("./settings.xml")) as Settings;
             AvaloniaXamlLoader.Load(this);
         }
 
         public static App instance;
+        public static Settings settings;
 
         public static FluentThemeMode colorMode { get
             {
