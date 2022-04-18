@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="settings.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>

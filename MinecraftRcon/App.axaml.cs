@@ -10,12 +10,37 @@ namespace MinecraftRcon
         public override void Initialize()
         {
             instance = this;
-            settings = new System.Xml.Serialization.XmlSerializer(typeof(Settings)).Deserialize(new System.IO.StreamReader("./settings.xml")) as Settings;
+            var stream = new System.IO.StreamReader("./settings.xml");
+            settingsField = new System.Xml.Serialization.XmlSerializer(typeof(Settings)).Deserialize(stream) as Settings;
+            stream.Close();
+            stream.Dispose();
             AvaloniaXamlLoader.Load(this);
         }
 
         public static App instance;
-        public static Settings settings;
+        private static Settings settingsField;
+        public static Settings settings
+        {
+            get
+            {
+
+                System.IO.StreamWriter writer = new("./settings.xml");
+                new System.Xml.Serialization.XmlSerializer(typeof(Settings)).Serialize(writer, settingsField);
+                writer.Flush();
+                writer.Close();
+                writer.Dispose(); 
+                return settingsField;
+            }
+            set
+            {
+                System.IO.StreamWriter writer = new("./settings.xml");
+                new System.Xml.Serialization.XmlSerializer(typeof(Settings)).Serialize(writer, value);
+                writer.Flush();
+                writer.Close();
+                writer.Dispose();
+                settingsField = value;
+            }
+        }
 
         public static FluentThemeMode colorMode { get
             {
