@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:l="clr-namespace:MinecraftRcon"
         mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="300"
 		Height="500" Width="650" 
         x:Class="MinecraftRcon.MainWindow"
@@ -12,7 +13,15 @@
 		ExtendClientAreaToDecorationsHint="True"
 		Icon="icon.ico"
 		>
-
+	<Window.Styles>
+		<Style Selector="l|RedHover:pointerover">
+			<Setter Property="Background" Value="Red"/>
+		</Style>
+		<Style Selector="l|LimeHover:pointerover">
+			<Setter Property="Background" Value="Lime"/>
+		</Style>
+	</Window.Styles>
+	
 	<Panel>
 		<ExperimentalAcrylicBorder IsHitTestVisible="False" Name="acryl">
 			<ExperimentalAcrylicBorder.Material>
@@ -29,11 +38,12 @@
 				<Label IsHitTestVisible="False" DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15">Minecraft Rcon Manager</Label>
 			</DockPanel>
 			<DockPanel LastChildFill="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-				<ScrollViewer Name="Scroll" DockPanel.Dock="Left">
+				<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Center" MinWidth="100" Name="Scroll" DockPanel.Dock="Left">
 					<StackPanel AttachedToVisualTree="Sessions_Loaded" Name="Sessions">
 						
 					</StackPanel>
 				</ScrollViewer>
+				<Panel Background="Gray" DockPanel.Dock="Left" Margin="1,0,7,0" HorizontalAlignment="Left" Width="2" VerticalAlignment="Stretch"/>
 			</DockPanel>
 		</StackPanel>
 	</Panel>

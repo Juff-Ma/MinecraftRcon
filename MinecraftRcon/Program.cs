@@ -12,11 +12,25 @@ namespace MinecraftRcon
         [STAThread]
         public static void Main(string[] args)
         {
-            Console.WindowHeight = 20;
-            Console.WindowWidth = 50;
-            Console.Title = "Minecraft Rcon console";
-            BuildAvaloniaApp()
-.StartWithClassicDesktopLifetime(args);
+            try
+            {
+                Console.WindowHeight = 20;
+                Console.WindowWidth = 50;
+                Console.Title = "Minecraft Rcon console";
+                BuildAvaloniaApp()
+    .StartWithClassicDesktopLifetime(args);
+            }
+            finally
+            {
+                if (App.exitGotCatched == false)
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Clear();
+                    Console.WriteLine("unexpected fatal exception (no clue why this happens if this happens more often please open a GitHub issue)");
+                    Console.ReadKey();
+                }
+            }
         }
         // Avalonia configuration, don't remove; also used by visual designer.
         public static AppBuilder BuildAvaloniaApp()
@@ -34,6 +48,19 @@ namespace MinecraftRcon
             Console.Write(new string(' ', Console.WindowWidth));
             Console.SetCursorPosition(0, currentLineCursor);
         }
+
+        public static void WriteLine(string message)
+        {
+            log += message + "\n";
+            Console.WriteLine(message);
+        }
+
+        public static void printLog()
+        {
+            Console.Write(log);
+        }
+
+        private static string log = "";
 
     }
 }

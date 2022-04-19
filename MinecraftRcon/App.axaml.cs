@@ -14,8 +14,11 @@ namespace MinecraftRcon
             settingsField = new System.Xml.Serialization.XmlSerializer(typeof(Settings)).Deserialize(stream) as Settings;
             stream.Close();
             stream.Dispose();
+            Methods.WriteLine("| console for commands and logs |");
             AvaloniaXamlLoader.Load(this);
         }
+
+        public static bool exitGotCatched = false;
 
         public static App instance;
         private static Settings settingsField;
