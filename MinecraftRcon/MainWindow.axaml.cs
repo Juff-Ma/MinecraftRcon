@@ -24,7 +24,25 @@ namespace MinecraftRcon
         public MainWindow()
         {
             InitializeComponent();
-            
+        }
+
+        private void ActivateQuery_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            queryPort.IsEnabled = (bool)(sender as ToggleSwitch).IsChecked;
+        }
+
+        private void SaveButtonClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (!confirmNotNull(hostname.Text, "Hostname") || !confirmNotNull(this.port.Text, "Rcon Port") || (this.queryPort.IsEnabled && !confirmNotNull(this.queryPort.Text, "Query Port"))) { return; }
+            if (!confirmInt(this.port.Text, "Rcon Port") || (this.queryPort.IsEnabled && !confirmInt(this.queryPort.Text, "Query Port"))) { return; }
+            int port = Convert.ToInt32(this.port.Text);
+            int queryPort = this.queryPort.IsEnabled ? Convert.ToInt32(this.queryPort.Text) : 0;
+            Session session = new Session() { Host = hostname.Text, Port = port, Query = new Query() { Enabled = this.queryPort.IsEnabled, Text = queryPort} };
+            if (!App.settings.Sessions.Session.Contains(session)) 
+            {
+                App.settings.Sessions.Session.Add(session);
+                reloadSessions();
+            }
         }
 
         protected override void OnClosed(EventArgs e)
@@ -278,5 +296,70 @@ namespace MinecraftRcon
                 }
                 else { throw new System.Xml.XmlException("bad theme descriptor"); }
             } }
+
+        private bool confirmInt(string confirm, string errorName)
+        {
+            bool returnable = true;
+
+            foreach (char c in confirm.ToCharArray())
+            {
+                switch (c)
+                {
+                    case '0': returnable = true; break;
+                    case '1': returnable = true; break;
+                    case '2': returnable = true; break;
+                    case '3': returnable = true; break;
+                    case '4': returnable = true; break;
+                    case '5': returnable = true; break;
+                    case '6': returnable = true; break;
+                    case '7': returnable = true; break;
+                    case '8': returnable = true; break;
+                    case '9': returnable = true; break;
+                    default: returnable = false; break;
+                }
+                if (returnable == false) 
+                {
+                    MessageBoxManager.GetMessageBoxCustomWindow(
+               new MessageBoxCustomParamsWithImage
+               {
+                   ButtonDefinitions = new[] {
+                        new ButtonDefinition {Name = "Ok", IsDefault = true}
+                   },
+                   ContentTitle = "Wrong Input",
+                   ContentHeader = "Incorrect input in field \"" + errorName + "\"",
+                   ContentMessage = "You typed a character into a port field (ports can only contain numbers)",
+                   WindowIcon = new WindowIcon("./Ressources/icon.ico"),
+                   WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                   Icon = new Avalonia.Media.Imaging.Bitmap("./Ressources/Question.ico")
+               }).ShowDialog(this);
+
+                    break;
+                }
+            }
+
+            return returnable;
+        }
+        private bool confirmNotNull(string confirm, string errorName)
+        {
+            if (confirm == "")
+                {
+                    MessageBoxManager.GetMessageBoxCustomWindow(
+               new MessageBoxCustomParamsWithImage
+               {
+                   ButtonDefinitions = new[] {
+                        new ButtonDefinition {Name = "Ok", IsDefault = true}
+                   },
+                   ContentTitle = "Wrong Input",
+                   ContentHeader = "Incorrect input in field \"" + errorName + "\"",
+                   ContentMessage = "Inputs need to be full!",
+                   WindowIcon = new WindowIcon("./Ressources/icon.ico"),
+                   WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                   Icon = new Avalonia.Media.Imaging.Bitmap("./Ressources/Question.ico")
+               }).ShowDialog(this);
+
+            }
+
+            return confirm != "";
+        }
     }
 }
