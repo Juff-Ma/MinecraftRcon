@@ -24,6 +24,13 @@ namespace MinecraftRcon
         public MainWindow()
         {
             InitializeComponent();
+            
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            App.exitGotCatched = true;
+            base.OnClosed(e);
         }
 
         private void ThemeButtonClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -53,7 +60,6 @@ namespace MinecraftRcon
             {
                 theme = App.settings.Theme;
                 this.PropertyChanged += Window_PropertyChanged;
-                throw new IndexOutOfRangeException();
                 base.Show();
             }
             catch (IndexOutOfRangeException e)
@@ -252,7 +258,6 @@ namespace MinecraftRcon
             }) ;
         }
 
-
         public string theme {get {
                 return App.settings.Theme; 
             }
@@ -269,6 +274,7 @@ namespace MinecraftRcon
                     App.colorMode = FluentThemeMode.Dark; acryl.Material.TintColor = Colors.Black; Console.BackgroundColor = ConsoleColor.Black; Console.ForegroundColor = ConsoleColor.White; Console.Clear();
                     Methods.printLog();
                     App.settings.Theme = value;
+                    
                 }
                 else { throw new System.Xml.XmlException("bad theme descriptor"); }
             } }

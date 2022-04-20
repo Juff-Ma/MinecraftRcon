@@ -12,13 +12,16 @@
         Background="Transparent"
 		ExtendClientAreaToDecorationsHint="True"
 		Icon="icon.ico"
-		>
+		MinWidth="500" MinHeight="200">
 	<Window.Styles>
 		<Style Selector="l|RedHover:pointerover">
 			<Setter Property="Background" Value="Red"/>
 		</Style>
 		<Style Selector="l|LimeHover:pointerover">
 			<Setter Property="Background" Value="Lime"/>
+		</Style>
+		<Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+			<Setter Property="BorderBrush" Value="DarkGray"/>
 		</Style>
 	</Window.Styles>
 	
@@ -44,6 +47,14 @@
 					</StackPanel>
 				</ScrollViewer>
 				<Panel Background="Gray" DockPanel.Dock="Left" Margin="1,0,7,0" HorizontalAlignment="Left" Width="2" VerticalAlignment="Stretch"/>
+				<StackPanel DockPanel.Dock="Right" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+					<Label Margin="0,0,0,3" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">Enter connection information</Label>
+					<StackPanel HorizontalAlignment="Center" Margin="0,3,0,0" Orientation="Horizontal">
+						<TextBox Name="hostname" BorderBrush="LightGray" MaxWidth="120" MinWidth="120" VerticalContentAlignment="Center" HorizontalAlignment="Right" Watermark="Hostname"/>
+						<Label VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin="2,0,2,0">:</Label>
+						<TextBox Name="port" BorderBrush="LightGray" MaxWidth="80" MinWidth="80" VerticalContentAlignment="Center" HorizontalAlignment="Left" Watermark="Port"/>
+					</StackPanel>
+				</StackPanel>
 			</DockPanel>
 		</StackPanel>
 	</Panel>
